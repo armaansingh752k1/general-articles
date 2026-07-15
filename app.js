@@ -1,0 +1,350 @@
+// --- ၁။ Firebase Configuration ---
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_AUTH_DOMAIN",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_STORAGE_BUCKET",
+  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
+
+const appId = "perspective-space-app";
+
+// --- ၂။ SVG Icons Pack ---
+const Icons = {
+  BookOpen: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>,
+  Key: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 7a2 2 0 012 2m-2.293 4.707L12 16H9v-3l4.293-4.293a2 2 0 112.828 2.828z" /></svg>,
+  Plus: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 6v12m6-6H6" /></svg>,
+  Settings: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>,
+  LogOut: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>,
+  Search: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>,
+  ArrowLeft: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>,
+  ChevronRight: () => <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7" /></svg>,
+  Edit: () => <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>,
+  Trash: () => <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>,
+  ImageIcon: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>,
+  X: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>,
+  Check: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" /></svg>,
+  Lock: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>,
+  Save: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" /></svg>
+};
+
+// --- ၃။ Main React Component ---
+function App() {
+  const [view, setView] = React.useState('list'); 
+  const [articles, setArticles] = React.useState([]);
+  const [selectedArticle, setSelectedArticle] = React.useState(null);
+  const [searchQuery, setSearchQuery] = React.useState('');
+  const [selectedCategory, setSelectedCategory] = React.useState('All');
+  
+  const [isAdmin, setIsAdmin] = React.useState(false);
+  const [showLoginModal, setShowLoginModal] = React.useState(false);
+  const [passcodeInput, setPasscodeInput] = React.useState('');
+  const [currentPasscode, setCurrentPasscode] = React.useState('1234');
+  const [passcodeError, setPasscodeError] = React.useState('');
+  const [dbStatus, setDbStatus] = React.useState('Connecting');
+
+  const [newPasscode, setNewPasscode] = React.useState('');
+  const [confirmNewPasscode, setConfirmNewPasscode] = React.useState('');
+  const [passcodeChangeSuccess, setPasscodeChangeSuccess] = React.useState(false);
+
+  const [editorTitle, setEditorTitle] = React.useState('');
+  const [editorCategory, setEditorCategory] = React.useState('');
+  const [editorContent, setEditorContent] = React.useState('');
+  const [editorImage, setEditorImage] = React.useState('');
+  const [isUploading, setIsUploading] = React.useState(false);
+  const [editingId, setEditingId] = React.useState(null);
+
+  const [toast, setToast] = React.useState(null);
+
+  const dbRef = React.useRef(null);
+  const fileInputRef = React.useRef(null);
+
+  const showToast = (message, type = 'success') => {
+    setToast({ message, type });
+    setTimeout(() => setToast(null), 3000);
+  };
+
+  // Firebase Setup Listener
+  React.useEffect(() => {
+    if (!firebaseConfig.apiKey || firebaseConfig.apiKey === "YOUR_API_KEY") {
+      setDbStatus('LocalFallback');
+      return;
+    }
+
+    try {
+      const app = firebase.initializeApp(firebaseConfig);
+      const db = firebase.firestore();
+      const auth = firebase.auth();
+      
+      dbRef.current = db;
+
+      auth.signInAnonymously().then(() => {
+        setDbStatus('Connected');
+        
+        // Dynamic Sync
+        db.collection('artifacts').doc(appId).collection('public').doc('data').collection('articles')
+          .onSnapshot((snapshot) => {
+            const items = [];
+            snapshot.forEach((doc) => {
+              items.push({ id: doc.id, ...doc.data() });
+            });
+            items.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+            setArticles(items);
+          });
+
+        // Config Sync
+        db.collection('artifacts').doc(appId).collection('public').doc('data').collection('settings').doc('adminConfig')
+          .onSnapshot((docSnap) => {
+            if (docSnap.exists()) {
+              setCurrentPasscode(docSnap.data().adminPasscode || '1234');
+            } else {
+              docSnap.ref.set({ adminPasscode: '1234' });
+            }
+          });
+
+      }).catch(() => setDbStatus('LocalFallback'));
+    } catch (err) {
+      setDbStatus('LocalFallback');
+    }
+  }, []);
+
+  // Filter categories calculation
+  const activeCategories = React.useMemo(() => {
+    const categories = articles.map(art => art.category?.trim()).filter(cat => cat && cat.length > 0);
+    return Array.from(new Set(categories));
+  }, [articles]);
+
+  // Image Resizer System
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setIsUploading(true);
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (event) => {
+      const img = new Image();
+      img.src = event.target.result;
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const MAX_WIDTH = 800;
+        let width = img.width;
+        let height = img.height;
+
+        if (width > MAX_WIDTH) {
+          height *= MAX_WIDTH / width;
+          width = MAX_WIDTH;
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+
+        setEditorImage(canvas.toDataURL('image/jpeg', 0.7));
+        setIsUploading(false);
+        showToast("Cover image processed successfully.");
+      };
+    };
+  };
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    if (passcodeInput === currentPasscode) {
+      setIsAdmin(true);
+      setShowLoginModal(false);
+      setPasscodeInput('');
+      showToast("Admin access authenticated.");
+    } else {
+      setPasscodeError("Invalid passcode key.");
+    }
+  };
+
+  const handlePasscodeChange = async (e) => {
+    e.preventDefault();
+    if (newPasscode.length < 4 || newPasscode !== confirmNewPasscode) {
+      showToast("Passcode values are invalid or unmatching", "error");
+      return;
+    }
+
+    if (dbRef.current) {
+      try {
+        await dbRef.current.collection('artifacts').doc(appId).collection('public').doc('data').collection('settings').doc('adminConfig')
+          .set({ adminPasscode: newPasscode });
+        setPasscodeChangeSuccess(true);
+        showToast("Passcode updated inside Firebase.");
+        setTimeout(() => setPasscodeChangeSuccess(false), 2000);
+      } catch (err) {
+        showToast("Error updating config.", "error");
+      }
+    }
+  };
+
+  const handlePublish = async (e) => {
+    e.preventDefault();
+    const data = {
+      title: editorTitle.trim(),
+      category: editorCategory.trim().replace(/\s+/g, '-').toUpperCase(),
+      content: editorContent.trim(),
+      image: editorImage || 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=800&q=80',
+      createdAt: new Date().toISOString()
+    };
+
+    if (dbRef.current) {
+      const ref = dbRef.current.collection('artifacts').doc(appId).collection('public').doc('data').collection('articles');
+      if (editingId) {
+        await ref.doc(editingId).update(data);
+      } else {
+        await ref.add(data);
+      }
+      setView('list');
+    }
+  };
+
+  const handleDelete = async (id, e) => {
+    e.stopPropagation();
+    if (!confirm("Delete this story?")) return;
+    if (dbRef.current) {
+      await dbRef.current.collection('artifacts').doc(appId).collection('public').doc('data').collection('articles').doc(id).delete();
+      setView('list');
+    }
+  };
+
+  const filteredArticles = articles.filter(art => {
+    const matchesSearch = art.title.toLowerCase().includes(searchQuery.toLowerCase()) || art.content.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesSearch && (selectedCategory === 'All' || art.category === selectedCategory);
+  });
+
+  return (
+    <div className="flex flex-col justify-between min-h-screen">
+      {toast && (
+        <div className="fixed top-5 right-5 z-50 flex items-center gap-3 px-4 py-3 rounded-2xl shadow-xl border bg-white border-slate-100 text-slate-800">
+          <span className="text-xs font-bold">{toast.message}</span>
+        </div>
+      )}
+
+      <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-100">
+        <div className="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-3 cursor-pointer" onClick={() => setView('list')}>
+            <div className="w-10 h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center shadow-md"><Icons.BookOpen /></div>
+            <div>
+              <h1 className="text-md font-extrabold tracking-tight bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">Perspective Space</h1>
+              <span className="text-[9px] text-slate-400 block font-bold uppercase">{dbStatus === 'Connected' ? 'Cloud Connected' : 'Local Workspace'}</span>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            {isAdmin ? (
+              <div className="flex items-center gap-1.5">
+                <button onClick={() => { setEditingId(null); setEditorTitle(''); setEditorCategory(''); setEditorContent(''); setEditorImage(''); setView('editor'); }} className="px-3 py-1.5 bg-indigo-600 text-white text-xs font-bold rounded-lg"><Icons.Plus /> Write</button>
+                <button onClick={() => setView(view === 'settings' ? 'list' : 'settings')} className="p-1.5 rounded-lg border border-slate-200"><Icons.Settings /></button>
+                <button onClick={() => setIsAdmin(false)} className="p-1.5 rounded-lg border border-slate-200 text-slate-400"><Icons.LogOut /></button>
+              </div>
+            ) : (
+              <button onClick={() => setShowLoginModal(true)} className="px-3 py-1.5 rounded-lg text-[11px] font-extrabold text-slate-600 border border-slate-200 uppercase"><Icons.Key /> Admin Login</button>
+            )}
+          </div>
+        </div>
+      </header>
+
+      <main className="max-w-4xl mx-auto w-full px-4 py-8 flex-grow">
+        {view === 'list' && (
+          <div className="space-y-8">
+            <div className="bg-white border border-slate-100 rounded-3xl p-6 text-center shadow-xs relative">
+              <h2 className="text-xl md:text-2xl font-black text-slate-900">Explore New Perspectives</h2>
+              <div className="mt-5 max-w-xs mx-auto relative">
+                <input type="text" placeholder="Search story..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} className="w-full pl-9 pr-4 py-2 text-[11px] rounded-xl bg-slate-50 border border-slate-200" />
+              </div>
+            </div>
+
+            {activeCategories.length > 0 && (
+              <div className="flex flex-wrap items-center gap-1.5">
+                <button onClick={() => setSelectedCategory('All')} className={`px-3 py-1 rounded-lg text-xs font-bold ${selectedCategory === 'All' ? 'bg-indigo-600 text-white' : 'bg-white'}`}>All</button>
+                {activeCategories.map(cat => (
+                  <button key={cat} onClick={() => setSelectedCategory(cat)} className={`px-3 py-1 rounded-lg text-xs font-bold uppercase ${selectedCategory === cat ? 'bg-indigo-600 text-white' : 'bg-white border'}`}>{cat}</button>
+                ))}
+              </div>
+            )}
+
+            {filteredArticles.length === 0 ? (
+              <div className="text-center p-10 bg-white border rounded-2xl max-w-xs mx-auto">
+                <p className="text-xs font-bold text-slate-500">No articles published yet.</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {filteredArticles.map(art => (
+                  <div key={art.id} onClick={() => { setSelectedArticle(art); setView('read'); }} className="bg-white rounded-2xl border border-slate-100 overflow-hidden flex flex-col justify-between cursor-pointer shadow-sm">
+                    <div>
+                      <div className="h-40 bg-slate-100 relative">
+                        <img src={art.image} className="w-full h-full object-cover" />
+                        {isAdmin && (
+                          <div className="absolute right-3 top-3 flex gap-1" onClick={e => e.stopPropagation()}>
+                            <button onClick={() => { startEdit(art); setView('editor'); }} className="p-1 rounded bg-white"><Icons.Edit /></button>
+                            <button onClick={e => handleDelete(art.id, e)} className="p-1 rounded bg-white text-rose-600"><Icons.Trash /></button>
+                          </div>
+                        )}
+                      </div>
+                      <div className="p-4">
+                        <h3 className="text-sm font-black text-slate-900">{art.title}</h3>
+                        <p className="text-[11px] text-slate-500 mt-1.5 line-clamp-3">{art.content}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {view === 'read' && selectedArticle && (
+          <div className="bg-white border border-slate-100 rounded-3xl overflow-hidden shadow-sm">
+            <div className="h-56 md:h-72 relative">
+              <img src={selectedArticle.image} className="w-full h-full object-cover" />
+              <button onClick={() => setView('list')} className="absolute top-4 left-4 px-2.5 py-1.5 bg-black/50 text-white text-[10px] font-bold rounded-lg">Back</button>
+            </div>
+            <div className="p-5 md:p-8 space-y-4">
+              <h2 className="text-xl font-black">{selectedArticle.title}</h2>
+              <p className="text-slate-700 text-xs md:text-sm leading-relaxed whitespace-pre-line">{selectedArticle.content}</p>
+            </div>
+          </div>
+        )}
+
+        {view === 'editor' && (
+          <div className="bg-white border rounded-2xl p-5 max-w-xl mx-auto">
+            <form onSubmit={handlePublish} className="space-y-4">
+              <input type="text" required placeholder="Title" value={editorTitle} onChange={e => setEditorTitle(e.target.value)} className="w-full px-3 py-2 text-xs border rounded-xl" />
+              <input type="text" required placeholder="Category" value={editorCategory} onChange={e => setEditorCategory(e.target.value)} className="w-full px-3 py-2 text-xs border rounded-xl uppercase" />
+              <input type="file" ref={fileInputRef} onChange={handleImageUpload} accept="image/*" className="text-xs" />
+              <textarea required rows="8" placeholder="Content Body" value={editorContent} onChange={e => setEditorContent(e.target.value)} className="w-full px-3 py-2 text-xs border rounded-xl" />
+              <button type="submit" className="px-4 py-2 bg-indigo-600 text-white rounded-xl text-xs font-bold">Publish</button>
+            </form>
+          </div>
+        )}
+
+        {view === 'settings' && isAdmin && (
+          <div className="bg-white border rounded-2xl p-5 max-w-sm mx-auto">
+            <form onSubmit={handlePasscodeChange} className="space-y-4">
+              <input type="password" required placeholder="New Passcode" value={newPasscode} onChange={e => setNewPasscode(e.target.value)} className="w-full px-3 py-2 text-xs border rounded-xl" />
+              <input type="password" required placeholder="Confirm Passcode" value={confirmNewPasscode} onChange={e => setConfirmNewPasscode(e.target.value)} className="w-full px-3 py-2 text-xs border rounded-xl" />
+              <button type="submit" className="px-4 py-2 bg-indigo-600 text-white rounded-xl text-xs font-bold">Save</button>
+            </form>
+          </div>
+        )}
+      </main>
+
+      {showLoginModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs">
+          <div className="bg-white w-full max-w-xs rounded-2xl p-5 border">
+            <form onSubmit={handleLogin} className="space-y-4">
+              <input type="password" placeholder="••••" required value={passcodeInput} onChange={e => setPasscodeInput(e.target.value)} className="w-full text-center font-black text-lg py-2 border rounded-xl" />
+              <button type="submit" className="w-full py-2 bg-indigo-600 text-white rounded-lg text-xs font-bold">Verify</button>
+            </form>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
